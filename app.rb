@@ -15,7 +15,7 @@ class App
             code_esr6 UNSIGNED INT,
             station_name VARCHAR(255),
             PRIMARY KEY(id)
-        )"
+        );"
 
         # Создание таблицы поездов, если её нету
         DB.execute "CREATE TABLE IF NOT EXISTS Trains(
@@ -29,17 +29,17 @@ class App
             PRIMARY KEY(id),
             FOREIGN KEY(forming_station) REFERENCES Stations(id),
             FOREIGN KEY(destination_station) REFERENCES Stations(id)
-        )"
+        );"
 
         # Создание таблицы вагонов, если её нету
         DB.execute "CREATE TABLE IF NOT EXISTS Wagons(
-        id INT,
-        cargo_name VARCHAR(255),
-        cargo_destination VARCHAR,
-        npp INT,
-        PRIMARY KEY(id),
-        FOREIGN KEY(cargo_destination) REFERENCES Stations(id)
-        )"
+            id INT,
+            cargo_name VARCHAR(255),
+            cargo_destination VARCHAR,
+            npp INT,
+            PRIMARY KEY(id),
+            FOREIGN KEY(cargo_destination) REFERENCES Stations(id)
+        );"
         
         SHELL.start
     end
