@@ -1,11 +1,80 @@
 module Train
-    def self.create(id, idx, number, forming, destination, departure, arrival)
-        App::DB.execute "SELECT * FROM Trains WHERE id = #{id}" do |row|
-            App::SHELL.msg("Дубликат: #{row}")
-            return
+    Create = ->(input, input_words) {
+        
+    }
+    Select = ->(input, input_words) {
+        if input_words[2] == "count"
+            command = "SELECT COUNT(*) FROM Trains"
+            for str in input_words[3..-1]
+                command << " " << str
+            end
+    
+            App::DB.execute command do |row|
+                App::SHELL.msg("Кол-во строк: #{row}")
+            end
+        end        
+    }
+    Update = ->(input, input_words) {
+        
+    }
+    Delete = ->(input, input_words) {
+        
+    }
+    Generate = ->(input, input_words) {
+        
+    }
+end
+
+module Station
+    Create = ->(input, input_words) {
+        
+        }
+    Select = ->(input, input_words) {
+        if input_words[2] == "count"
+            command = "SELECT COUNT(*) FROM Stations"
+            for str in input_words[3..-1]
+                command << " " << str
+            end
+    
+            App::DB.execute command do |row|
+                App::SHELL.msg("Кол-во строк: #{row}")
+            end
+        end    
+    }
+    Update = ->(input, input_words) {
+        
+        }
+    Delete = ->(input, input_words) {
+        
+        }
+    Generate = ->(input, input_words) {
+        
+        }
+end
+
+module Wagon
+    Create = ->(input, input_words) {
+        
+        }
+    Select = ->(input, input_words) {
+        if input_words[2] == "count"
+            command = "SELECT COUNT(*) FROM Wagons"
+            for str in input_words[3..-1]
+                command << " " << str
+            end
+    
+            App::DB.execute command do |row|
+                App::SHELL.msg("Кол-во строк: #{row}")
+            end
         end
-        App::DB.execute "INSERT INTO Trains (id, idx, number, forming_station, destination_station, time_departure, time_arrival)
-        VALUES (#{id}, #{idx},  #{number}, \'#{forming}\', \'#{destination}\', \'#{departure}\', \'#{arrival}\');"
-        App::SHELL.msg(Shell::Success_msg)
-    end
+        }
+    Update = ->(input, input_words) {
+        
+        }
+    Delete = ->(input, input_words) {
+        
+        }
+    Generate = ->(input, input_words) {
+        
+        }
 end

@@ -3,6 +3,9 @@ require_relative "shell"
 
 
 
+# Либо написать отдельно команды для каждой сущности,
+# либо преобразовать введенный текст в sql
+
 class App
     # Открытие файла с базой данных, имя файла в кавычках
     DB = SQLite3::Database.new "database.db"
@@ -20,10 +23,10 @@ class App
         # Создание таблицы поездов, если её нету
         DB.execute "CREATE TABLE IF NOT EXISTS Trains(
             id INT,
-            idx INT,
+            idx VARCHAR(32),
             number INT,
-            forming_station VARCHAR(255),
-            destination_station VARCHAR(255),
+            forming_station INT,
+            destination_station INT,
             time_departure TEXT,
             time_arrival TEXT,
             PRIMARY KEY(id),

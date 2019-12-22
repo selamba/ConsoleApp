@@ -7,6 +7,13 @@ class Shell
     Clear_screen = "clear"  # Команда очистки экрана
     Success_msg = "Операция успешно выполнена."
     @@command_history = []  # История введённых команд
+    Entity_commands = [     # Список корректных команд
+        "create",
+        "select",
+        "update",
+        "delete",
+        "generate"
+    ]
     
             
     # Главный цикл
@@ -27,16 +34,74 @@ class Shell
             
 
             # Обработка ввода
-            case input
+            input_words = input.split(" ")
+            p input_words
+            
+            # Преобразования в sql
+            # Обработка целевой таблицы
+            target_table = ""
+            case input_words[0]
+            when "train"
+                target_table = "Trains"
+            when "station"
+                target_table = "Stations"
+            when "wagon"
+                target_table = "Wagons"
             when "exit"
-                # Очистка экрана
                 system(Clear_screen)
-                break
-            when "train create"
-                Train::create(4, 1337, 50, "Павелецкий", 3, 3, 3)
+                return
             else
-                self.msg("Неизвестная команда: #{input}")
-                self.msg("Напишите \"help\" для помощи.")
+                self.msg("Неверная сущность: #{input_words[0]}")
+                next
+            end
+            
+            # Обработка целевой команды
+            target_command = input_words[1]
+            if !Entity_commands.include?(target_command)
+                self.msg("Неверная команда: #{target_command}")
+                next
+            end
+            
+            # Самое интересное
+            if target_table == "Trains"
+                case target_command
+                when "create"
+                    Train::Create.call input, input_words
+                when "select"
+                    Train::Select.call input, input_words
+                when "update"
+                    Train::Update.call input, input_words
+                when "delete"
+                    Train::Delete.call input, input_words
+                when "generate"
+                    Train::Generate.call input, input_words
+                end
+            elsif target_table == "Stations"
+                case target_command
+                when "create"
+                    Station::Create.call input, input_words
+                when "select"
+                    Station::Select.call input, input_words
+                when "update"
+                    Station::Update.call input, input_words
+                when "delete"
+                    Station::Delete.call input, input_words
+                when "generate"
+                    Station::Generate.call input, input_words
+                end
+            elsif target_table == "Wagons"
+                case target_command
+                when "create"
+                    Wagon::Create.call input, input_words
+                when "select"
+                    Wagon::Select.call input, input_words
+                when "update"
+                    Wagon::Update.call input, input_words
+                when "delete"
+                    Wagon::Delete.call input, input_words
+                when "generate"
+                    Wagon::Generate.call input, input_words
+                end
             end
         end
     end
