@@ -10,9 +10,18 @@ module Train
             end
     
             App::DB.execute command do |row|
-                App::SHELL.msg("Кол-во строк: #{row}")
+                App::SHELL.msg("Кол-во поездов: #{row}")
             end
-        end        
+        elsif input_words[2] == "where"
+            command = "select * from Trains"
+            for str in input_words[2..-1]
+                command << " " << str
+            end
+    
+            App::DB.execute command do |row|
+                App::SHELL.msg("Поезда: #{row}")
+            end
+        end
     }
     Update = ->(input, input_words) {
         
@@ -37,9 +46,18 @@ module Station
             end
     
             App::DB.execute command do |row|
-                App::SHELL.msg("Кол-во строк: #{row}")
+                App::SHELL.msg("Кол-во станций: #{row}")
             end
-        end    
+        elsif input_words[2] == "where"
+            command = "select * from Stations"
+            for str in input_words[2..-1]
+                command << " " << str
+            end
+    
+            App::DB.execute command do |row|
+                App::SHELL.msg("Станции: #{row}")
+            end
+        end
     }
     Update = ->(input, input_words) {
         
@@ -64,10 +82,19 @@ module Wagon
             end
     
             App::DB.execute command do |row|
-                App::SHELL.msg("Кол-во строк: #{row}")
+                App::SHELL.msg("Кол-во вагонов: #{row}")
+            end
+        elsif input_words[2] == "where"
+            command = "select * from Wagons"
+            for str in input_words[2..-1]
+                command << " " << str
+            end
+    
+            App::DB.execute command do |row|
+                App::SHELL.msg("Станции: #{row}")
             end
         end
-        }
+    }
     Update = ->(input, input_words) {
         
         }

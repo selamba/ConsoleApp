@@ -3,7 +3,6 @@ require_relative "commands"
 
 
 class Shell
-    #Ruby_command = "ruby"   # Команда для вызова интерпретатора
     Clear_screen = "clear"  # Команда очистки экрана
     Success_msg = "Операция успешно выполнена."
     @@command_history = []  # История введённых команд
@@ -27,6 +26,7 @@ class Shell
             input = gets.chomp
             
             # Поддержание истории введённых команд
+            # TODO: взаимодействие с историей
             @@command_history.push(input)
             if @@command_history.length > 32
                 @@command_history.delete_at(0)
@@ -36,8 +36,11 @@ class Shell
             # Обработка ввода
             input_words = input.split(" ")
             p input_words
+            if input == "exit"
+                system(Clear_screen)
+                return
+            end
             
-            # Преобразования в sql
             # Обработка целевой таблицы
             target_table = ""
             case input_words[0]
@@ -47,9 +50,6 @@ class Shell
                 target_table = "Stations"
             when "wagon"
                 target_table = "Wagons"
-            when "exit"
-                system(Clear_screen)
-                return
             else
                 self.msg("Неверная сущность: #{input_words[0]}")
                 next
