@@ -4,7 +4,8 @@ module Train
     }
     Select = ->(input, input_words) {
         if input_words[2] == "count"
-            command = "SELECT COUNT(*) FROM Trains"
+            command = "select count(*) from Trains"
+	
             for str in input_words[3..-1]
                 command << " " << str
             end
@@ -14,14 +15,34 @@ module Train
             end
         elsif input_words[2] == "where"
             command = "select * from Trains"
+	
             for str in input_words[2..-1]
                 command << " " << str
             end
     
             App::DB.execute command do |row|
-                App::SHELL.msg("Поезда: #{row}")
+                App::SHELL.msg("#{row}")
             end
-        end
+		elsif input_words[2].start_with?("column")
+			command = "select"
+			where_index = 3
+	
+			for str in input_words[3..-1]
+				if str == "where"
+					break
+				end
+				command << " " << str
+			end
+			command << " from Trains"
+			
+			for str in input_words[where_index..-1]
+				command << " " << str
+			end
+	
+			App::DB.execute command do |row|
+				App::SHELL.msg("#{row}")
+			end
+		end
     }
     Update = ->(input, input_words) {
         
@@ -40,7 +61,8 @@ module Station
         }
     Select = ->(input, input_words) {
         if input_words[2] == "count"
-            command = "SELECT COUNT(*) FROM Stations"
+            command = "select count(*) from Stations"
+	
             for str in input_words[3..-1]
                 command << " " << str
             end
@@ -50,14 +72,34 @@ module Station
             end
         elsif input_words[2] == "where"
             command = "select * from Stations"
+	
             for str in input_words[2..-1]
                 command << " " << str
             end
     
             App::DB.execute command do |row|
-                App::SHELL.msg("Станции: #{row}")
+                App::SHELL.msg("#{row}")
             end
-        end
+		elsif input_words[2].start_with?("column")
+			command = "select"
+			where_index = 3
+	
+			for str in input_words[3..-1]
+				if str == "where"
+					break
+				end
+				command << " " << str
+			end
+			command << " from Stations"
+			
+			for str in input_words[where_index..-1]
+				command << " " << str
+			end
+	
+			App::DB.execute command do |row|
+				App::SHELL.msg("#{row}")
+			end
+		end
     }
     Update = ->(input, input_words) {
         
@@ -76,7 +118,8 @@ module Wagon
         }
     Select = ->(input, input_words) {
         if input_words[2] == "count"
-            command = "SELECT COUNT(*) FROM Wagons"
+            command = "select count(*) from Wagons"
+	
             for str in input_words[3..-1]
                 command << " " << str
             end
@@ -86,14 +129,34 @@ module Wagon
             end
         elsif input_words[2] == "where"
             command = "select * from Wagons"
+	
             for str in input_words[2..-1]
                 command << " " << str
             end
     
             App::DB.execute command do |row|
-                App::SHELL.msg("Станции: #{row}")
+                App::SHELL.msg("#{row}")
             end
-        end
+		elsif input_words[2].start_with?("column")
+			command = "select"
+			where_index = 3
+	
+			for str in input_words[3..-1]
+				if str == "where"
+					break
+				end
+				command << " " << str
+			end
+			command << " from Wagons"
+			
+			for str in input_words[where_index..-1]
+				command << " " << str
+			end
+	
+			App::DB.execute command do |row|
+				App::SHELL.msg("#{row}")
+			end
+		end
     }
     Update = ->(input, input_words) {
         

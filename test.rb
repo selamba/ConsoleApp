@@ -1,2 +1,3 @@
-str = "Павелецкий"
-puts("str")
+str = gets
+words = str.split(" ")
+puts words
