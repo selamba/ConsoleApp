@@ -11,7 +11,7 @@ class App
     def initialize
         # Создание таблицы станций, если её нету
         DB.execute "CREATE TABLE IF NOT EXISTS Stations(
-            id INT,
+            id INT NOT NULL,
             code_esr6 UNSIGNED INT,
             station_name VARCHAR(255),
             PRIMARY KEY(id)
@@ -19,7 +19,7 @@ class App
 
         # Создание таблицы поездов, если её нету
         DB.execute "CREATE TABLE IF NOT EXISTS Trains(
-            id INT,
+            id INT NOT NULL,
             idx VARCHAR(32),
             number INT,
             forming_station INT,
@@ -33,7 +33,7 @@ class App
 
         # Создание таблицы вагонов, если её нету
         DB.execute "CREATE TABLE IF NOT EXISTS Wagons(
-            id INT,
+            id INT NOT NULL,
             cargo_name VARCHAR(255),
             cargo_destination VARCHAR,
             npp INT,

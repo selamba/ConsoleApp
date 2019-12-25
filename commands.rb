@@ -92,6 +92,10 @@ module Commands
 		App::SHELL.msg("Удаление данных прошло успешно.")
 	end
 	
+	def self.generate(input_words)
+		amount = input_words[2]
+	end
+	
 	# Преобразование сущности в название таблицы
 	private_class_method def self.entity(str)
 		return (str.capitalize << "s")

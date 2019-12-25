@@ -33,6 +33,12 @@ class Shell
             end
 
             # Обработка ввода
+			# SQL injection
+			if input.include?(";")
+				self.msg("Не используйте точки с запятой.")
+				next
+			end
+			
             if input == "exit"
                 system(Clear_screen)
                 return
