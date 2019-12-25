@@ -1,5 +1,19 @@
 module Commands
+	HELP_MESSAGES = {
+		:help => "help help message",
+		:select => "select help message",
+		:update => "update help message",
+		:delete => "delete help message"
+		}
+	
+	def self.help
+		for method in Commands.singleton_methods(false)
+			App::SHELL.msg("#{method}: #{HELP_MESSAGES[method]}")
+		end
+	end
+	
 	def self.select(input_words)
+		# Целевая таблица
 		table = entity(input_words[0])
 		
 		if input_words[2] == "count"
@@ -78,9 +92,8 @@ module Commands
 		App::SHELL.msg("Удаление данных прошло успешно.")
 	end
 	
-	private
-	
-	def self.entity(str)
+	# Преобразование сущности в название таблицы
+	private_class_method def self.entity(str)
 		return (str.capitalize << "s")
 	end
 end

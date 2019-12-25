@@ -36,7 +36,10 @@ class Shell
             if input == "exit"
                 system(Clear_screen)
                 return
-            end
+			elsif input == "help"
+				Commands::help
+				next
+			end
 			input_words = input.split(" ")
                         
             # Обработка целевой команды
