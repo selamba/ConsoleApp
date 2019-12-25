@@ -34,12 +34,11 @@ class Shell
             
 
             # Обработка ввода
-            input_words = input.split(" ")
-            p input_words
             if input == "exit"
                 system(Clear_screen)
                 return
             end
+			input_words = input.split(" ")
             
             # Обработка целевой таблицы
             target_table = ""

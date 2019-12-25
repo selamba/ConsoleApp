@@ -31,6 +31,7 @@ module Train
 				if str == "where"
 					break
 				end
+				where_index += 1
 				command << " " << str
 			end
 			command << " from Trains"
@@ -45,7 +46,23 @@ module Train
 		end
     }
     Update = ->(input, input_words) {
-        
+		command = "update Trains set"
+		where_index = 3
+		
+		for str in input_words[3..-1]
+			if str == "where"
+				break
+			end
+			where_index += 1
+			command << " " << str
+		end
+	
+		for str in input_words[where_index..-1]
+			command << " " << str
+		end
+	
+		App::DB.execute command
+		App::SHELL.msg("Изменение данных прошло успешно.")
     }
     Delete = ->(input, input_words) {
         
@@ -88,6 +105,7 @@ module Station
 				if str == "where"
 					break
 				end
+				where_index += 1
 				command << " " << str
 			end
 			command << " from Stations"
@@ -102,7 +120,23 @@ module Station
 		end
     }
     Update = ->(input, input_words) {
-        
+		command = "update Stations set"
+		where_index = 3
+		
+		for str in input_words[3..-1]
+			if str == "where"
+				break
+			end
+			where_index += 1
+			command << " " << str
+		end
+	
+		for str in input_words[where_index..-1]
+			command << " " << str
+		end
+	
+		App::DB.execute command
+		App::SHELL.msg("Изменение данных прошло успешно.")
         }
     Delete = ->(input, input_words) {
         
@@ -145,6 +179,7 @@ module Wagon
 				if str == "where"
 					break
 				end
+				where_index += 1
 				command << " " << str
 			end
 			command << " from Wagons"
@@ -159,7 +194,23 @@ module Wagon
 		end
     }
     Update = ->(input, input_words) {
-        
+		command = "update Wagons set"
+		where_index = 3
+		
+		for str in input_words[3..-1]
+			if str == "where"
+				break
+			end
+			where_index += 1
+			command << " " << str
+		end
+	
+		for str in input_words[where_index..-1]
+			command << " " << str
+		end
+	
+		App::DB.execute command
+		App::SHELL.msg("Изменение данных прошло успешно.")
         }
     Delete = ->(input, input_words) {
         
