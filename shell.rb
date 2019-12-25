@@ -6,6 +6,11 @@ class Shell
     Clear_screen = "clear"  # Команда очистки экрана
     Success_msg = "Операция успешно выполнена."
     @@command_history = []  # История введённых команд
+	Entities = [	# Список корректных сущностей
+		"train",
+		"station",
+		"wagon"
+	]
     Entity_commands = [     # Список корректных команд
         "create",
         "select",
@@ -33,7 +38,7 @@ class Shell
             end
 
             # Обработка ввода
-			# SQL injection
+			# SQL injection, на всякий случай
 			if input.include?(";")
 				self.msg("Не используйте точки с запятой.")
 				next
@@ -47,15 +52,21 @@ class Shell
 				next
 			end
 			input_words = input.split(" ")
+			
+			# Проверка сущности на корректность
+			if !Entity.include?(input_words[0])
+				self.msg("Неверная сущность: #{input_words[0]}")
+				next
+			end
                         
-            # Обработка целевой команды
+            # Проверка команды на корректность
             target_command = input_words[1]
             if !Entity_commands.include?(target_command)
                 self.msg("Неверная команда: #{target_command}")
                 next
             end
             
-            # Самое интересное
+            # Выполнение запроса
 			Commands.send(target_command, input_words)
         end
     end

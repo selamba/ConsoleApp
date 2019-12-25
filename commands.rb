@@ -93,7 +93,13 @@ module Commands
 	end
 	
 	def self.generate(input_words)
+		table = entity(input_words[0])
 		amount = input_words[2]
+		
+		amount.times do
+	#		App::DB.execute "insert into #{table}
+	#		values()"
+		end
 	end
 	
 	# Преобразование сущности в название таблицы
