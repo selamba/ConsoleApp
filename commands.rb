@@ -95,10 +95,17 @@ module Commands
 	def self.generate(input_words)
 		table = entity(input_words[0])
 		amount = input_words[2]
+		columns, values = [], []
 		
-		amount.times do
-	#		App::DB.execute "insert into #{table}
-	#		values()"
+		for str in input_words[3..-1]
+			pair = str.split("=")
+			columns << pair[0]
+			values << pair[1]
+		end
+		
+		amount.to_i.times do
+			App::DB.execute "insert into #{table} (#{columns.join(", ")})
+			values (#{values.join(", ")})"
 		end
 	end
 	

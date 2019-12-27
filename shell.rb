@@ -54,7 +54,7 @@ class Shell
 			input_words = input.split(" ")
 			
 			# Проверка сущности на корректность
-			if !Entity.include?(input_words[0])
+			if !Entities.include?(input_words[0])
 				self.msg("Неверная сущность: #{input_words[0]}")
 				next
 			end

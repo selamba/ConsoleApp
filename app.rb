@@ -11,19 +11,19 @@ class App
     def initialize
         # Создание таблицы станций, если её нету
         DB.execute "CREATE TABLE IF NOT EXISTS Stations(
-            id INT NOT NULL,
-            code_esr6 UNSIGNED INT,
+            id INTEGER NOT NULL,
+			code_esr6 UNSIGNED INTEGER,
             station_name VARCHAR(255),
             PRIMARY KEY(id)
         );"
 
         # Создание таблицы поездов, если её нету
         DB.execute "CREATE TABLE IF NOT EXISTS Trains(
-            id INT NOT NULL,
+            id INTEGER NOT NULL,
             idx VARCHAR(32),
-            number INT,
-            forming_station INT,
-            destination_station INT,
+            number INTEGER,
+			forming_station INTEGER,
+			destination_station INTEGER,
             time_departure TEXT,
             time_arrival TEXT,
             PRIMARY KEY(id),
@@ -33,10 +33,10 @@ class App
 
         # Создание таблицы вагонов, если её нету
         DB.execute "CREATE TABLE IF NOT EXISTS Wagons(
-            id INT NOT NULL,
+            id INTEGER NOT NULL,
             cargo_name VARCHAR(255),
             cargo_destination VARCHAR,
-            npp INT,
+            npp INTEGER,
             PRIMARY KEY(id),
             FOREIGN KEY(cargo_destination) REFERENCES Stations(id)
         );"
