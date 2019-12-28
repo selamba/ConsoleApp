@@ -14,7 +14,10 @@ module Commands
 					"\tПосле 'generate' кол-во строк для генерации, после кол-ва значения колонок этих строк.\n"\
 					"\tКолонки, для которых не было указано значение, не будут иметь значения (nil).\n"\
 					"\tПример: train generate 100 destination_station='Станция такая-то', number = 123456\n",
-		:menu => "Выводит список доступных команд.\n"
+		:menu => "Выводит список доступных команд.\n",
+		:create => "Создаёт строку с указанными значениями колонок: * create ...\n"\
+					"\tПосле 'create' значения колонок этой строки.\n"\
+					"\tПример: train create idx=55, number = 123456\n",
 		}
 	
 	def self.help
@@ -63,6 +66,24 @@ module Commands
 		command << " " << gets.chomp
 		input_words = command.split(" ")
 		Commands.send(input_words[1], input_words)
+	end
+	
+	def self.create(input_words)
+		table = entity(input_words[0])
+		args = input_words[2..-1]
+		columns, values = [], []
+		
+		# Обработка аргументов
+		for arg in args
+			arg.delete!(",")
+			tmp = arg.split("=")
+			columns << tmp[0]
+			values << tmp[1]
+		end
+		command = "insert into #{table} (#{columns.join(", ")}) values (#{values.join(", ")})"
+		
+		App::DB.execute command
+		App::SHELL.msg("Создание строки прошло успешно.")
 	end
 	
 	def self.select(input_words)
