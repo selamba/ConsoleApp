@@ -50,6 +50,9 @@ class Shell
 			elsif input == "help"
 				Commands::help
 				next
+			elsif input == "menu"
+				Commands::menu
+				next
 			end
 			input_words = input.split(" ")
 			

@@ -12,6 +12,39 @@ module Commands
 		end
 	end
 	
+	def self.menu
+		number = 1
+		index = Hash.new
+		
+		# Вывод списка методов
+		for ent in Shell::Entities
+			for method in Commands.singleton_methods(false)
+				if [:menu, :help].include?(method)
+					next
+				end
+				
+				puts("#{number}. #{ent} #{method}")
+				index[number] = "#{ent} #{method}"
+				number += 1
+			end
+		end
+		
+		# Выбор команды из списка
+		number = 0
+		until number > 0 do
+			App::SHELL.msg("Выберите команду (номер команды): ", false)
+			number = gets.chomp.to_i
+		end
+		command = index[number]
+		
+		# Дописывание команды
+		App::SHELL.msg("Допишите команду:")
+		print("#{command} ")
+		command << " " << gets.chomp
+		input_words = command.split(" ")
+		Commands.send(input_words[1], input_words)
+	end
+	
 	def self.select(input_words)
 		# Целевая таблица
 		table = entity(input_words[0])
@@ -107,6 +140,7 @@ module Commands
 			App::DB.execute "insert into #{table} (#{columns.join(", ")})
 			values (#{values.join(", ")})"
 		end
+		App::SHELL.msg("Генерация сущностей прошла успешно.")
 	end
 	
 	# Преобразование сущности в название таблицы
